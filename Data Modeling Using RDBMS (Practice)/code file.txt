@@ -1,0 +1,19 @@
+create database carSales;
+use carSales;
+select * from SalesPerson;
+
+Create table SalesPerson(
+SalesId int primary key,
+FirstName varchar(50),
+City varchar(50),
+CommisionRate decimal(5,2) 
+);
+
+insert into SalesPerson(SalesId, FirstName, City, CommisionRate) values
+(1001, 'John','London',12),
+(1002, 'Bob', 'San Jose', 13),
+(1004, 'Judith', 'London', 11),
+(1007, 'Robin', 'Barcelona', 15),
+(1003, 'Harry', 'New York', 10),
+(1005, 'James', 'London', 26),
+(1008, 'Charles', 'Florida', 0);

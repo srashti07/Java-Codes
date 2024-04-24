@@ -1,0 +1,72 @@
+create database CarSalesChallenge;
+USE CarSalesChallenge;
+Create table SalesPerson(
+SalesId int primary key ,
+FirstName varchar(50),
+City varchar(50),
+CommisionRate decimal(5,2) 
+);
+
+
+insert into SalesPerson(SalesId, FirstName, City, CommisionRate) values
+(1001, 'John','London',12),
+(1002, 'Bob', 'San Jose', 13),
+(1004, 'Judith', 'London', 11),
+(1007, 'Robin', 'Barcelona', 15),
+(1003, 'Harry', 'New York', 10),
+(1005, 'James', 'London', 26),
+(1008, 'Charles', 'Florida', 0);
+
+
+
+
+CREATE TABLE Customer (
+    CustomerId INT PRIMARY KEY,
+    FirstName VARCHAR(50),
+    LastName VARCHAR(50),
+    City VARCHAR(50),
+    Rating INT,
+    SalesId INT,
+    FOREIGN KEY (SalesID) REFERENCES SalesPerson(SalesID)
+);
+
+INSERT INTO Customer (CustomerId, FirstName, LastName, City, Rating, SalesId)
+VALUES
+    (2001, 'Hoffman', 'Anny', 'London', 100, 1001),
+    (2002, 'Giovanni', 'Jenny', 'Rome', 200, 1003),
+    (2003, 'Liu', 'William', 'San Jose', 100, 1002),
+    (2004, 'Harry', 'Grass', 'Berlin', 300, 1002),
+    (2005, 'Clemens', 'John', 'London', 200, 1001),
+    (2006, 'Fanny', 'John', 'San Jose', 200, 1005),
+    (2007, 'Jonathan', 'Bob', 'Rome', 300, 1004);
+    
+CREATE TABLE OrderTable (
+	OrderId int Primary Key,
+    Amount int,
+    OrderDate Date,
+    CustomerId int,
+    Foreign Key (CustomerId) References Customer(CustomerId)
+);
+
+Insert into OrderTable (OrderId, Amount, OrderDate, CustomerId)
+Values
+	(3001, 123, '2020-02-01', 2001),
+    (3003, 187, '2020-10-02', 2007),
+    (3002, 187, '2000-07-30', 2003),
+    (3005, 201, '2011-10-09', 2007),
+    (3009, 145, '2021-10-10', 2002),
+    (3007, 167, '2021-04-02', 2002),
+    (3008, 189, '1999-03-02', 2006),
+    (3010, 100, '2000-09-18', 2004);
+    
+DELETE FROM OrderTable WHERE OrderId = 3008;
+SET SQL_SAFE_UPDATES = 0;
+DELETE FROM SalesPerson WHERE CommisionRate = 0;
+UPDATE OrderTable SET Amount = 200 WHERE Amount = 100;
+UPDATE SalesPerson SET CommisionRate = 28 WHERE CommisionRate = 26;
+UPDATE Customer SET Rating = 150 WHERE Rating = 100;
+SET SQL_SAFE_UPDATES = 1;
+SELECT *
+FROM SalesPerson AS SP
+JOIN Customer AS C ON SP.SalesId = C.SalesId
+JOIN OrderTable AS OT ON C.CustomerId = OT.CustomerId;
